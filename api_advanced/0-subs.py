@@ -1,20 +1,20 @@
 #!/usr/bin/python3
-"""Script that fetch number of subscriber for a given subreddit."""
+"""DOCUMENTING"""
 import requests
 
 
 def number_of_subscribers(subreddit):
-    """Return number of subscribers is @subreddit is valid subreddit.
-    if not return 0."""
+    """DOC"""
+    reddit_url = "https://www.reddit.com/r/{}/about.json".format(subreddit)
 
-    headers = {'User-Agent': 'MyAPI/0.0.1'}
-    subreddit_url = "https://reddit.com/r/{}.json".format(subreddit)
-    response = requests.get(subreddit_url, headers=headers)
+    header = {'User-agent': 'Mozilla/5.0'}
+    response = requests.get(reddit_url,
+                            headers=header
+                            )
 
     if response.status_code == 200:
-        json_data = response.json()
-        subscriber_number = json_data.get('data').get(
-            'children')[0].get('data').get('subreddit_subscribers')
-        return subscriber_number
-    else:
-        return 0
+        data = response.json()['data']
+        subs = data['subscribers']
+        return subs
+    return 0
+number_of_subscribers("programming")
